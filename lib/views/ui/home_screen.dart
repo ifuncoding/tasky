@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/views/widgets/custom_text.dart';
+import 'package:tasky/app/drawer_page.dart';
+import 'package:tasky/app/zoom_scaffold.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
+class MyHomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  MenuController menuController;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+
+    menuController = new MenuController(
+      vsync: this,
+    )..addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    menuController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text('hello world'),
-            CustomText(
-              text: 'Welcome',
-              fontFamily: 'Nunito',
-              fontSize: 25.0,
-              fontWeight: FontWeight.w700,
-            )
-          ],
+    return ChangeNotifierProvider(
+      builder: (context) => menuController,
+      child: ZoomScaffold(
+        menuScreen: DrawerScreen(),
+        contentScreen: Layout(
+          contentBuilder: (cc) => Container(
+            color: Colors.grey[200],
+            child: Container(
+              color: Colors.grey[200],
+            ),
+          ),
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

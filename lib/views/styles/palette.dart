@@ -7,7 +7,8 @@ class Palette {
 
   static const Color scaffold = Color(0xFFFFFFFF);
 
-  static const Color bgDrawer = Color(0xff0E1F53);
+  static const Color bg_drawer = Color(0xff0E1F53);
+  static const Color bg_gray = Color(0xffE5E5E5);
 
   static const Color text_primary = Color(0xff303030);
 

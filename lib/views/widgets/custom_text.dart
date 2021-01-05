@@ -7,14 +7,16 @@ class CustomText extends StatelessWidget {
   final String fontFamily;
   final double fontSize;
   final Color color;
+  final TextAlign textAlign;
 
   const CustomText({
     Key key,
     @required this.text,
-    this.fontWeight,
+    this.fontWeight = FontWeight.w400,
     this.fontFamily,
-    this.fontSize,
-    this.color,
+    this.fontSize = 14.0,
+    this.color = Palette.text_primary,
+    this.textAlign = TextAlign.left,
   }) : super(key: key);
 
   @override
@@ -22,11 +24,12 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: fontSize == null ? 14.0 : fontSize,
-        fontWeight: fontWeight == null ? FontWeight.w400 : fontWeight,
-        color: color == null ? Palette.text_primary : color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
         fontFamily: fontFamily,
       ),
+      textAlign: textAlign,
     );
   }
 }

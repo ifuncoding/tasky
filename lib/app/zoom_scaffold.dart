@@ -46,7 +46,12 @@ class _ZoomScaffoldState extends State<ZoomScaffold>
                 ),
               )
             ]),
-        body: HomePage(title: 'hello',),
+        body: Container(
+          color: Colors.white,
+          child: Center(
+            child: Text('Welcome'),
+          ),
+        ),
       ),
     ));
   }
