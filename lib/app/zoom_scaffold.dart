@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/views/ui/home_screen.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final Widget menuScreen;
@@ -45,27 +46,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold>
                 ),
               )
             ]),
-        body: widget.contentScreen.contentBuilder(context),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: 0,
-          items: [
-            BottomNavigationBarItem(
-                title: Text(''),
-                icon: Icon(
-                  Icons.home,
-                  color: Colors.grey,
-                )),
-            BottomNavigationBarItem(
-                title: Text(''),
-                icon: Icon(Icons.shopping_basket, color: Colors.grey)),
-            BottomNavigationBarItem(
-                title: Text(''),
-                icon: Icon(Icons.shopping_cart, color: Colors.grey)),
-            BottomNavigationBarItem(
-                title: Text(''), icon: Icon(Icons.person, color: Colors.grey)),
-          ],
-        ),
+        body: HomePage(title: 'hello',),
       ),
     ));
   }

@@ -1,16 +1,15 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:tasky/views/widgets/custom_text.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -22,12 +21,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
-          child: Text('hello world')
-      ),// This trailing comma makes auto-formatting nicer for build methods.
+        child: Column(
+          children: [
+            Text('hello world'),
+            CustomText(
+              text: 'Welcome',
+              fontFamily: 'Nunito',
+              fontSize: 25.0,
+              fontWeight: FontWeight.w700,
+            )
+          ],
+        ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

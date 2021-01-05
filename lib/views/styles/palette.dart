@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const String font_nunito = 'Nunito';
+
 class Palette {
   static const Color primary = Color(0xFFF26950);
 
