@@ -3,12 +3,12 @@ import 'package:tasky/app/drawer_page.dart';
 import 'package:tasky/app/zoom_scaffold.dart';
 import 'package:provider/provider.dart';
 
-class MyHomePage extends StatefulWidget {
+class RouteApp extends StatefulWidget {
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _RouteAppState createState() => new _RouteAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+class _RouteAppState extends State<RouteApp> with TickerProviderStateMixin {
   MenuController menuController;
 
   @override

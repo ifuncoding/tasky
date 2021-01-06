@@ -11,8 +11,8 @@ class ButtonPrimary extends StatelessWidget {
   const ButtonPrimary({
     Key key,
     @required this.text,
-    this.textColor,
-    this.backgroundColor,
+    this.textColor = Colors.white,
+    this.backgroundColor = Palette.primary,
     this.onTap,
   }) : super(key: key);
 
@@ -21,19 +21,18 @@ class ButtonPrimary extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 25.0),
         height: 57.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
-          color: backgroundColor == null ? Colors.transparent : backgroundColor,
+          color: backgroundColor,
         ),
         child: Center(
           child: CustomText(
-            text: text,
-            color: textColor == null ? Colors.white : textColor,
+            text,
+            color: textColor,
             fontSize: 18.0,
             fontWeight: FontWeight.w700,
-            fontFamily: font_nunito,
+            fontFamily: m_font_nunito,
           ),
         ),
       ),

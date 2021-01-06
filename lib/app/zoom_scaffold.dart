@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasky/views/ui/home_screen.dart';
+import 'package:tasky/app/nav_screen.dart';
+import 'package:tasky/views/ui/route.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final Widget menuScreen;
@@ -24,35 +25,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold>
 
   createContentDisplay() {
     return zoomAndSlideContent(new Container(
-      child: new Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: new AppBar(
-            backgroundColor: Colors.grey[200],
-            elevation: 0.0,
-            leading: new IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Provider.of<MenuController>(context, listen: true).toggle();
-                }),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.access_time,
-                  color: Colors.grey,
-                ),
-              )
-            ]),
-        body: Container(
-          color: Colors.white,
-          child: Center(
-            child: Text('Welcome'),
-          ),
-        ),
-      ),
+      child: NavScreen(),
     ));
   }
 
@@ -120,6 +93,48 @@ class _ZoomScaffoldState extends State<ZoomScaffold>
         ),
         createContentDisplay()
       ],
+    );
+  }
+}
+
+class DemoHome extends StatelessWidget {
+  const DemoHome({
+    Key key,
+    @required this.context,
+  }) : super(key: key);
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: new AppBar(
+          backgroundColor: Colors.grey[200],
+          elevation: 0.0,
+          leading: new IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Provider.of<MenuController>(context, listen: true).toggle();
+              }),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.access_time,
+                color: Colors.grey,
+              ),
+            )
+          ]),
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Text('Welcome'),
+        ),
+      ),
     );
   }
 }

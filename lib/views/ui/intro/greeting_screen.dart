@@ -23,13 +23,13 @@ class GreetingScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
-                          text: 'Welcome to ',
-                          fontFamily: font_nunito,
+                          'Welcome to ',
+                          fontFamily: m_font_nunito,
                           fontSize: 25.0,
                           fontWeight: FontWeight.w700,
                         ),
                         CustomText(
-                          text: 'Tasky.',
+                          'Tasky.',
                           fontSize: 25.0,
                           fontWeight: FontWeight.w700,
                           color: Palette.primary,
@@ -37,9 +37,8 @@ class GreetingScreen extends StatelessWidget {
                       ],
                     ),
                     CustomText(
-                      text:
-                          'An application that helps to help organize your activities',
-                      fontFamily: font_nunito,
+                      'An application that helps to help organize your activities',
+                      fontFamily: m_font_nunito,
                       fontSize: 16.0,
                       color: Color(0xff252729).withOpacity(0.6),
                       textAlign: TextAlign.center,
@@ -49,8 +48,8 @@ class GreetingScreen extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
+                left: 25.0,
+                right: 25.0,
                 child: Column(
                   children: [
                     ButtonPrimary(
@@ -64,6 +63,7 @@ class GreetingScreen extends StatelessWidget {
                     ButtonPrimary(
                       text: 'Not Now',
                       textColor: Palette.text_primary.withOpacity(0.5),
+                      backgroundColor: Colors.transparent,
                     ),
                   ],
                 ),

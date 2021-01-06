@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/app/zoom_scaffold.dart';
 import 'package:tasky/views/styles/palette.dart';
-import 'package:tasky/views/ui/home_screen.dart';
+import 'package:tasky/views/ui/auth/auth_screen.dart';
+import 'package:tasky/views/ui/route.dart';
 import 'package:tasky/views/ui/intro/greeting_screen.dart';
 
 import 'app/drawer_page.dart';
@@ -18,13 +19,13 @@ class MyApp extends StatelessWidget {
         title: 'Zoom Menu',
         theme: ThemeData(
           fontFamily: 'Poppins',
-          primaryColor: Palette.primary,
+          primaryColor: Colors.white,
           scaffoldBackgroundColor: Palette.scaffold,
           textTheme:
               TextTheme(bodyText1: TextStyle(color: Palette.text_primary)),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: GreetingScreen(),
+        home: RouteApp(),
       ),
     );
   }
