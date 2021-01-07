@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/app/zoom_scaffold.dart';
 import 'package:tasky/views/styles/palette.dart';
+import 'package:tasky/views/ui/intro/greeting_screen.dart';
+import 'package:tasky/views/widgets/custom_text.dart';
 
 import 'circular_image.dart';
 
@@ -10,11 +14,17 @@ class DrawerScreen extends StatelessWidget {
       "https://celebritypets.net/wp-content/uploads/2016/12/Adriana-Lima.jpg";
 
   final List<MenuItem> options = [
-    MenuItem(Icons.search, 'Search'),
-    MenuItem(Icons.shopping_basket, 'Basket'),
-    MenuItem(Icons.favorite, 'Discounts'),
-    MenuItem(Icons.code, 'Prom-codes'),
-    MenuItem(Icons.format_list_bulleted, 'Orders'),
+    MenuItem(SvgPicture.asset('assets/icons/user.svg', color: Colors.white),
+        'Manage Account', () {}),
+    MenuItem(SvgPicture.asset('assets/icons/search.svg', color: Colors.white),
+        'Search Tasks', () {}),
+    MenuItem(SvgPicture.asset('assets/icons/activity.svg', color: Colors.white),
+        'Activity', () {}),
+    MenuItem(
+        SvgPicture.asset('assets/icons/settings.svg'), 'App Settings', () {}),
+    MenuItem(SvgPicture.asset('assets/icons/log-in.svg'), 'Logout', () {
+      Get.offAll(GreetingScreen());
+    }),
   ];
 
   @override
@@ -34,64 +44,72 @@ class DrawerScreen extends StatelessWidget {
             right: MediaQuery.of(context).size.width / 2.9),
         color: Palette.bg_drawer,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                Provider.of<MenuController>(context, listen: true).toggle();
+              },
+              child: SvgPicture.asset('assets/icons/back_drawer.svg'),
+            ),
+            SizedBox(height: 61),
             Row(
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
-                  child: CircularImage(
-                    NetworkImage(imageUrl),
+                  child: Container(
+                    width: 66,
+                    height: 66,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(7),
+                    ),
                   ),
                 ),
-                Text(
-                  'Tatiana',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        'Jessie Yaegar',
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                      CustomText(
+                        'Indonesia',
+                        color: Colors.white,
+                        fontSize: 13,
+                      ),
+                    ],
                   ),
                 )
               ],
             ),
-            Spacer(),
+            SizedBox(height: 61),
             Column(
               children: options.map((item) {
                 return ListTile(
-                  leading: Icon(
-                    item.icon,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                  leading: item.icon,
                   title: Text(
                     item.title,
                     style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                   ),
+                  onTap: item.onTap,
                 );
               }).toList(),
             ),
             Spacer(),
             ListTile(
               onTap: () {},
-              leading: Icon(
-                Icons.settings,
-                color: Colors.white,
-                size: 20,
-              ),
-              title: Text('Settings',
+              title: Text('Analytics',
                   style: TextStyle(fontSize: 14, color: Colors.white)),
             ),
-            ListTile(
-              onTap: () {},
-              leading: Icon(
-                Icons.headset_mic,
-                color: Colors.white,
-                size: 20,
-              ),
-              title: Text('Support',
-                  style: TextStyle(fontSize: 14, color: Colors.white)),
-            ),
+            ListTile(),
           ],
         ),
       ),
@@ -101,7 +119,8 @@ class DrawerScreen extends StatelessWidget {
 
 class MenuItem {
   String title;
-  IconData icon;
+  SvgPicture icon;
+  Function onTap;
 
-  MenuItem(this.icon, this.title);
+  MenuItem(this.icon, this.title, this.onTap);
 }

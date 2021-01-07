@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/views/styles/palette.dart';
+import 'package:tasky/views/ui/activity/activity_screen.dart';
 import 'package:tasky/views/ui/home/home_screen.dart';
 
 class NavScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class _NavScreenState extends State<NavScreen> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
     HomeScreen(),
-    Container(),
+    ActivityScreen(),
     Container(),
     Container(),
   ];

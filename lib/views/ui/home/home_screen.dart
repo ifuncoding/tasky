@@ -1,11 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/app/zoom_scaffold.dart';
 import 'package:tasky/views/styles/palette.dart';
+import 'package:tasky/views/ui/home/task_group_screen.dart';
 import 'package:tasky/views/widgets/custom_text.dart';
+import 'package:tasky/views/widgets/task_vertical_item.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -109,79 +110,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class TaskVerticalItem extends StatelessWidget {
-  final bool isDone;
-
-  const TaskVerticalItem({
-    Key key,
-    this.isDone = true,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 24.0),
-      width: double.infinity,
-      height: 75.0,
-      child: Row(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            margin: isDone
-                ? EdgeInsets.only(right: 14)
-                : EdgeInsets.symmetric(horizontal: 18),
-            child: isDone
-                ? SvgPicture.asset('assets/icons/arrow-left-circle.svg')
-                : Stack(
-                    children: [
-                      Container(
-                        width: 3,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: Palette.bg_item_1.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      Positioned(
-                        child: Container(
-                          width: 3,
-                          height: 25,
-                          decoration: BoxDecoration(
-                            color: Palette.bg_item_1,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomText(
-                  'Create New Features',
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-                CustomText(
-                  'Mobile Apps Design',
-                  fontSize: 15,
-                  color: Palette.text_primary.withOpacity(0.5),
-                ),
-              ],
-            ),
-          ),
-          Spacer(),
-          SvgPicture.asset('assets/icons/more-horizontal.svg'),
-        ],
-      ),
-    );
-  }
-}
-
 class TaskGroupLists extends StatelessWidget {
   const TaskGroupLists({
     Key key,
@@ -214,6 +142,9 @@ class TaskGroupLists extends StatelessWidget {
                   title: 'Mobile App Design',
                   taskColor: Palette.bg_item_1,
                   taskLength: 2,
+                  onTap: () {
+                    Get.to(TaskGroupScreen());
+                  },
                 ),
                 SizedBox(width: 15.0),
                 MyTaskItem(
@@ -244,6 +175,7 @@ class MyTaskItem extends StatelessWidget {
   final int taskLength;
   final String icon;
   final String taskBackground;
+  final Function onTap;
 
   const MyTaskItem({
     Key key,
@@ -252,60 +184,64 @@ class MyTaskItem extends StatelessWidget {
     this.taskLength = 0,
     this.icon = 'assets/icons/smartphone.svg',
     this.taskBackground = 'assets/images/bg1.png',
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 152.0,
-      height: 200.0,
-      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(taskBackground),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 10),
-            spreadRadius: -5.0,
-            blurRadius: 10.0,
-            color: taskColor.withOpacity(0.5),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 152.0,
+        height: 200.0,
+        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(taskBackground),
+            fit: BoxFit.cover,
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(5.32),
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 10),
+              spreadRadius: -5.0,
+              blurRadius: 10.0,
+              color: taskColor.withOpacity(0.5),
             ),
-            width: 30.0,
-            height: 30.0,
-            padding: EdgeInsets.all(2.0),
-            margin: EdgeInsets.symmetric(vertical: 4.0),
-            child: SvgPicture.asset(icon),
-          ),
-          CustomText(
-            taskLength.toString() + ' Tasks',
-            color: Colors.white.withOpacity(0.5),
-            fontSize: 10.0,
-            fontWeight: FontWeight.w500,
-          ),
-          SizedBox(
-            height: 4.0,
-          ),
-          CustomText(
-            'Mobile App Design',
-            fontWeight: FontWeight.w500,
-            fontSize: 15.0,
-            color: Colors.white,
-          )
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(5.32),
+              ),
+              width: 30.0,
+              height: 30.0,
+              padding: EdgeInsets.all(2.0),
+              margin: EdgeInsets.symmetric(vertical: 4.0),
+              child: SvgPicture.asset(icon),
+            ),
+            CustomText(
+              taskLength.toString() + ' Tasks',
+              color: Colors.white.withOpacity(0.5),
+              fontSize: 10.0,
+              fontWeight: FontWeight.w500,
+            ),
+            SizedBox(
+              height: 4.0,
+            ),
+            CustomText(
+              'Mobile App Design',
+              fontWeight: FontWeight.w500,
+              fontSize: 15.0,
+              color: Colors.white,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -326,7 +262,7 @@ class HomeHeader extends StatelessWidget {
           Row(
             children: [
               CustomText(
-                'Hello,',
+                'Hello, ',
                 fontSize: 15.0,
                 fontWeight: FontWeight.w500,
               ),
