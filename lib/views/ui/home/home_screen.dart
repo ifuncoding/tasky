@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -9,72 +11,165 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            title: HomeAppBar(),
-          ),
-          SliverToBoxAdapter(
-            child: HomeHeader(),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 25.0),
-              height: 50,
-              decoration: BoxDecoration(
-                color: Palette.bg_gray_100,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: TextField(
-                style: TextStyle(
-                  fontSize: 13.0,
-                  color: Palette.text_primary.withOpacity(0.4),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, value) {
+          return [
+            SliverAppBar(
+              pinned: true,
+              automaticallyImplyLeading: false,
+              title: HomeAppBar(),
+            ),
+            SliverToBoxAdapter(
+              child: HomeHeader(),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 25.0),
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Palette.bg_gray_100,
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                decoration: InputDecoration(
-                  prefixIcon: Container(
-                    margin: EdgeInsets.all(12.0),
-                    child: SvgPicture.asset(
-                      'assets/icons/Union.svg',
-                      width: 20.0,
-                      height: 20.0,
-                    ),
-                  ),
-                  border: InputBorder.none,
-                  hintText: 'Search Your Task',
-                  hintStyle: TextStyle(
+                child: TextField(
+                  style: TextStyle(
                     fontSize: 13.0,
                     color: Palette.text_primary.withOpacity(0.4),
                   ),
+                  decoration: InputDecoration(
+                    prefixIcon: Container(
+                      margin: EdgeInsets.all(12.0),
+                      child: SvgPicture.asset(
+                        'assets/icons/Union.svg',
+                        width: 20.0,
+                        height: 20.0,
+                      ),
+                    ),
+                    border: InputBorder.none,
+                    hintText: 'Search Your Task',
+                    hintStyle: TextStyle(
+                      fontSize: 13.0,
+                      color: Palette.text_primary.withOpacity(0.4),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25.0),
-                    child: CustomText(
-                      'My Tasks',
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w500,
+            SliverToBoxAdapter(
+              child: TaskGroupLists(),
+            ),
+            SliverToBoxAdapter(
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 24.0),
+                      alignment: Alignment.centerLeft,
+                      child: TabBar(
+                        tabs: [
+                          Container(
+                            child: Tab(
+                              text: 'In Progress',
+                            ),
+                            margin: EdgeInsets.only(right: 15.0),
+                          ),
+                          Tab(
+                            text: 'Complete',
+                          ),
+                        ],
+                        unselectedLabelColor:
+                            Palette.text_primary.withOpacity(0.5),
+                        indicatorColor: Palette.primary,
+                        indicatorWeight: 3.0,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        labelColor: Palette.text_primary,
+                        indicatorPadding: EdgeInsets.only(right: 20.0),
+                        isScrollable: true,
+                        labelPadding: EdgeInsets.only(left: 0.0),
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      MyTaskItem(),
-                      MyTaskItem(),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          )
+          ];
+        },
+        body: Container(
+          child: ListView.builder(
+            padding: EdgeInsets.all(0),
+            itemCount: 100,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                color: index % 2 == 0 ? Colors.blue : Colors.green,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  height: 100.0,
+                  child: Text(
+                    'Flutter is awesome',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TaskGroupLists extends StatelessWidget {
+  const TaskGroupLists({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 28.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 25.0),
+            child: CustomText(
+              'My Tasks',
+              fontSize: 15.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 14.0),
+          Container(
+            height: 220.0,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(right: 25.0, bottom: 20),
+              children: [
+                SizedBox(width: 15.0),
+                MyTaskItem(
+                  title: 'Mobile App Design',
+                  taskColor: Palette.bg_item_1,
+                  taskLength: 2,
+                ),
+                SizedBox(width: 15.0),
+                MyTaskItem(
+                  title: 'Meeting With Team',
+                  taskBackground: 'assets/images/bg2.png',
+                  icon: 'assets/icons/monitor.svg',
+                  taskColor: Palette.bg_item_2,
+                  taskLength: 1,
+                ),
+                SizedBox(width: 15.0),
+                MyTaskItem(
+                  title: 'Meeting With Team',
+                  taskBackground: 'assets/images/bg3.png',
+                  taskColor: Palette.bg_item_3,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -82,8 +177,19 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MyTaskItem extends StatelessWidget {
+  final String title;
+  final Color taskColor;
+  final int taskLength;
+  final String icon;
+  final String taskBackground;
+
   const MyTaskItem({
     Key key,
+    @required this.title,
+    this.taskColor = Palette.primary,
+    this.taskLength = 0,
+    this.icon = 'assets/icons/smartphone.svg',
+    this.taskBackground = 'assets/images/bg1.png',
   }) : super(key: key);
 
   @override
@@ -91,11 +197,10 @@ class MyTaskItem extends StatelessWidget {
     return Container(
       width: 152.0,
       height: 200.0,
-      padding:
-          EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/bg1.png'),
+          image: AssetImage(taskBackground),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(10.0),
@@ -104,7 +209,7 @@ class MyTaskItem extends StatelessWidget {
             offset: Offset(0, 10),
             spreadRadius: -5.0,
             blurRadius: 10.0,
-            color: Palette.bg_item_1.withOpacity(0.5),
+            color: taskColor.withOpacity(0.5),
           ),
         ],
       ),
@@ -121,16 +226,17 @@ class MyTaskItem extends StatelessWidget {
             height: 30.0,
             padding: EdgeInsets.all(2.0),
             margin: EdgeInsets.symmetric(vertical: 4.0),
-            child:
-                SvgPicture.asset('assets/icons/smartphone.svg'),
+            child: SvgPicture.asset(icon),
           ),
           CustomText(
-            '2 Task',
+            taskLength.toString() + ' Tasks',
             color: Colors.white.withOpacity(0.5),
             fontSize: 10.0,
             fontWeight: FontWeight.w500,
           ),
-          SizedBox(height: 4.0,),
+          SizedBox(
+            height: 4.0,
+          ),
           CustomText(
             'Mobile App Design',
             fontWeight: FontWeight.w500,
