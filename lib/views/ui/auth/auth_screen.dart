@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
-      color: Palette.bg_gray_100,
+      color: Palette.bg_gray_200,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -231,7 +231,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
-      color: Palette.bg_gray_100,
+      color: Palette.bg_gray_200,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
