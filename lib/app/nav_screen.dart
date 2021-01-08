@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/views/styles/palette.dart';
 import 'package:tasky/views/ui/activity/activity_screen.dart';
 import 'package:tasky/views/ui/home/home_screen.dart';
+import 'package:tasky/views/ui/user/profile_screen.dart';
 
 class NavScreen extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     ActivityScreen(),
-    Container(),
+    ProfileScreen(),
     Container(),
   ];
 
